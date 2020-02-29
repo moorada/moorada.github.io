@@ -1,0 +1,395 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Hacking NFC cards</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=20ec8b1979">
+
+    <link rel="shortcut icon" href="../favicon.png" type="image/png">
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="amp/index.html">
+    
+    <meta property="og:site_name" content="moorada tells things">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Hacking NFC cards">
+    <meta property="og:description" content="It is certainly not the first article on this topic and probably not the last either, but I have noticed that in the various articles there is always something missing or taken for granted.  In this article I would also like to tell about my particular journey. Goal The goal">
+    <meta property="og:url" content="http://localhost:2368/hacking-nfc-card/">
+    <meta property="og:image" content="http://localhost:2368/content/images/2020/02/access-card-4575613_1920.jpg">
+    <meta property="article:published_time" content="2020-02-29T22:31:01.000Z">
+    <meta property="article:modified_time" content="2020-02-29T23:37:05.000Z">
+    <meta property="article:tag" content="hacking">
+    <meta property="article:tag" content="nfc">
+    <meta property="article:tag" content="mifare">
+    <meta property="article:tag" content="crack">
+    <meta property="article:tag" content="rfid">
+    <meta property="article:tag" content="tag">
+    <meta property="article:tag" content="miLazyCracker">
+    <meta property="article:tag" content="kali-linux">
+    <meta property="article:tag" content="mfoc">
+    <meta property="article:tag" content="card">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hacking NFC cards">
+    <meta name="twitter:description" content="It is certainly not the first article on this topic and probably not the last either, but I have noticed that in the various articles there is always something missing or taken for granted.  In this article I would also like to tell about my particular journey. Goal The goal">
+    <meta name="twitter:url" content="http://localhost:2368/hacking-nfc-card/">
+    <meta name="twitter:image" content="http://localhost:2368/content/images/2020/02/access-card-4575613_1920.jpg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="moorada">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="hacking, nfc, mifare, crack, rfid, tag, miLazyCracker, kali-linux, mfoc, card">
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="1280">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "moorada tells things",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/favicon.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "moorada",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2020/02/moorada-2.jpg",
+            "width": 640,
+            "height": 640
+        },
+        "url": "http://localhost:2368/author/moorada/",
+        "sameAs": []
+    },
+    "headline": "Hacking NFC cards",
+    "url": "http://localhost:2368/hacking-nfc-card/",
+    "datePublished": "2020-02-29T22:31:01.000Z",
+    "dateModified": "2020-02-29T23:37:05.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://localhost:2368/content/images/2020/02/access-card-4575613_1920.jpg",
+        "width": 1920,
+        "height": 1280
+    },
+    "keywords": "hacking, nfc, mifare, crack, rfid, tag, miLazyCracker, kali-linux, mfoc, card",
+    "description": "It is certainly not the first article on this topic and probably not the last either, but I have noticed that in the various articles there is always something missing or taken for granted.  In this article I would also like to tell about my particular journey. Goal The goal",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.min.js?v=20ec8b1979"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "127faa38b42f"
+});
+</script>
+    <meta name="generator" content="Ghost 1.26">
+    <link rel="alternate" type="application/rss+xml" title="moorada tells things" href="../rss/index.html">
+
+</head>
+<body class="post-template tag-hacking tag-nfc tag-mifare tag-crack tag-rfid tag-tag tag-milazycracker tag-kali-linux tag-mfoc tag-card">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="../">moorada tells things</a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-hacking tag-nfc tag-mifare tag-crack tag-rfid tag-tag tag-milazycracker tag-kali-linux tag-mfoc tag-card ">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2020-02-29">29 February 2020</time>
+                        <span class="date-divider">/</span> <a href="../tag/hacking/">hacking</a>
+                </section>
+                <h1 class="post-full-title">Hacking NFC cards</h1>
+            </header>
+
+            <figure class="post-full-image" style="background-image: url(../content/images/2020/02/access-card-4575613_1920.jpg)">
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <div class="kg-card-markdown"><p>It is certainly not the first article on this topic and probably not the last either, but I have noticed that in the various articles there is always something missing or taken for granted.  In this article I would also like to tell about my particular journey.</p>
+<h1 id="goal">Goal</h1>
+<p>The goal is to describe the process of hacking an NFC cards.<br>
+These cards are used for access control in various fields (bus, car keys, hotel). In my specific case it is a laundry card for the use of washing machines and dryers on my university campus and my goal is to change the balance on my card.<br>
+First of all, there are more types of cards and the one I will go into today are the most widespread, as well as the cheapest and vulnerable. I'm talking about MIFARE high-frequency NFC cards, in fact they were exploited more than 10 years ago but are still widely used.</p>
+<h1 id="whatyouneed">What you need</h1>
+<ul>
+<li>NFC reader/writer (PN531/532/533). You can easily find it on the internet. I used ACR122U.</li>
+<li>Kali Linux (it's not necessary but it makes it easier). You can run it "live" from a USB drive (<a href="https://www.kali.org/docs/usb/kali-linux-live-usb-install/">guide</a>). Alternatively you can use some linux distro.</li>
+</ul>
+<h1 id="letsdo">Let's do</h1>
+<p>First let's start Kali Linux and connect to the internet. Open the terminal and execute the following commands.</p>
+<pre><code>sudo su
+apt update
+apt install libnfc-bin
+apt install mfoc
+git clone https://github.com/nfc-tools/miLazyCracker
+</code></pre>
+<p>Now let's go into the "miLazyCracker" folder and edit the file "miLazyCrackerFreshInstall.sh" with any text editor.<br>
+You have to replace the lines:</p>
+<pre><code>[ -f craptev1-v1.1.tar.xz ] || wget http://www2.vaneay.fr/mifare/craptev1-v1.1.tar.xz
+[ -f crapto1-v3.3.tar.xz ] || wget http://www2.vaneay.fr/mifare/crapto1-v3.3.tar.xz
+</code></pre>
+<p>to</p>
+<pre><code>[ -f craptev1-v1.1.tar.xz ] || wget http://privat.bahnhof.se/wb736562/rfid/crypto1/craptev1-v1.1.tar.xz
+[ -f crapto1-v3.3.tar.xz ] || wget http://privat.bahnhof.se/wb736562/rfid/crypto1/crapto1-v3.3.tar.xz
+</code></pre>
+<p>save and close!</p>
+<p>Now plug in your NFC reader and run</p>
+<pre><code>modprobe -r pn533_usb
+</code></pre>
+<p>Install miLazyCracker</p>
+<pre><code>./miLazyCrackerFreshInstall.sh
+</code></pre>
+<p>Now you can run the program</p>
+<pre><code>miLazyCracker
+</code></pre>
+<p>Now the program starts "brute-force" (It's not pure brute-force, but exploits a vulnerability) on the keys of the card sectors. Don't worry if it takes a while. It's normal for it to take about 10-60 minutes.</p>
+<p>Finally the program dumps the card to file *.mfd and asks if you want to clone.  If you want to clone to another tag immediately, exchange the tag on the reader with the new tag and submity y, otherwise submit n.</p>
+<p>At this point you have your card dump, you can restore your card at this time as many times as you want or clone it to other cards.<br>
+For example, if the card has a balance of $50, you can use up the credit and then restore it to its dump state with the balance of $50.<br>
+If you want to write the dump:</p>
+<pre><code>nfc-mfclassic w a dump.mfd dump.mfd
+</code></pre>
+<h2 id="letsdobetter">Let's do better</h2>
+<p>Honestly, that's not good enough for me. So I tried to read and understand the various sectors of the dump to understand their meaning and try to change the balance.<br>
+A great program to view and edit dumps is 010Editor available <a href="https://www.sweetscape.com/download/010editor/">here<br>
+</a>.</p>
+<p>After installing it, you can open the dump.mfd and view its contents. You will see a lot of values in hexadecimal format.  There are 16 sectors and each sector consists of 4 lines. In the first 2 sectors there is usually information about the card or company that produced it, and the last line of each sector corresponds to the reading and writing keys of each sector.</p>
+<h3 id="findthebalance">Find the balance</h3>
+<p>The goal is to make sense of these bytes in order to figure out what to change.<br>
+To do this you can look for some specific value.  Obviously all bytes are presented in hexadecimal so it would make no sense to look for your balance in decimal form. I, for example, knowing my balance, started with this. My balance was $14.00 so I started by converting 1400 into hexadecimal. If you don't know how to convert it or you don't like it you can use a converter (it won't be hard to find it on the web).</p>
+<p><em>1400 --&gt; <strong>0578</strong></em>.</p>
+<p>Searching the dump values I found the same inverted values in the first two bytes of the second line of the third sector. Intuitively I saw the similarity with the first line and doing the inverse transaction I noticed that it corresponds to the balance before the last transaction (16$)</p>
+<pre><code>40 06 00 00 00 00 00 00 00 00 11 02 14 00 47 90
+78 05 00 00 00 00 00 00 00 00 11 02 14 01 32 13
+</code></pre>
+<p>So I tried to change the value to another balance ($60) like this:</p>
+<p><em>6000 --&gt; <strong>003C</strong></em>.</p>
+<pre><code>40 06 00 00 00 00 00 00 00 00 11 02 14 00 47 90
+70 17 00 00 00 00 00 00 00 01 11 02 14 01 32 13
+</code></pre>
+<p>I saved and wrote the modified dump on the card...</p>
+<pre><code>nfc-mfclassic w a editedDump.mfd editedDump.mfd
+</code></pre>
+<p>I tried the paper in the laundry room, but <em><strong>"din din din din!"</strong></em> and red light was the reply. Apparently, the washing machine detected something weird!</p>
+<p>Apparently, the washing machine picked up something weird. So I rewrote the card with the dump unmodified and re-tested the card.Everything worked properly!</p>
+<h3 id="reversethechecksum">Reverse the checksum</h3>
+<p>That made me realize there's some kind of cheksum, so I tried to figure out what the other bytes meant. Since I did another transaction with the card and the credit should be changed, I reread the card to see if there was any change. This time I didn't use myLazyCracker, since I know the keys, but simply:</p>
+<pre><code>nfc-mfclassic r a input.mfd output.mfd
+</code></pre>
+<p>where "input.mfd" corresponds to the previously made dump (containing the read and write keys) , and "output.mfd" corresponds to the name of the new dump</p>
+<p>No sector except the third one has changed! In fact, only the first two lines of the third sector have changed...</p>
+<pre><code>78 05 00 00 00 00 00 00 00 00 11 02 14 01 32 13
+B0 04 00 00 00 00 00 00 00 00 38 02 14 01 7D 4A
+</code></pre>
+<p>And it is immediately noticeable that the second line has become the first line and the bytes in position 11-13, which before were equal between the two lines, have now changed.</p>
+<p>After having translated them into decimal it was easy to understand that these values corresponded to the date when the transaction was done. The value at position 14 could be a daily operations counter. But the last two bytes are completely anonymous. Those two bytes are probably checksums of some kind.</p>
+<p>So I try to see if they are the result of some operation (XOR,OR,AND,+,-,*,/) on the other bytes, but I don't find any matching value (I still suggest you try your dump). I don't get down, I look for some checksum note functions on the web, until I try the cyclic redundancy check (CRC).</p>
+<p>There are many types of algorithms for CRC, so I look for a computer online, and I find <a href="https://crccalc.com/">this great site</a> that allows you to calculate the most famous CRC algorithms.</p>
+<p><img src="../content/images/2020/02/Online-CRC-Calculator.png" alt="Online-CRC-Calculator"></p>
+<p>So I entered all the bytes of a line except the last two and clicked on "Calc CRC-16" because in my case the checksum was probably 2 bytes, so 16 bits. You can try different and more appropriate types of CRC. Anyway on the site is shows the list of cheksum and... <em><strong>Kaboom!</strong></em> Here is the correct checksum!</p>
+<p><img src="../content/images/2020/02/CRCcorrect.png" alt="CRCcorrect"></p>
+<p>Once I found the right checksum I just had to change the balance, calculate the checksum (in my case CRC-16/MCRF4XX ) and rewrite the whole line like this</p>
+<pre><code>70 17 00 00 00 00 00 00 00 00 38 02 14 01 EB DB
+</code></pre>
+<p>And that’s it!</p>
+</div>
+                </div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="../content/images/2020/02/moorada-2.jpg" alt="moorada">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="../author/moorada/">moorada</a></h4>
+            <p>Hi, I'm moorada</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="../author/moorada/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="../">
+                <img src="../content/images/2020/02/Screenshot-2020-02-29-at-18.58.14.png" alt="moorada tells things icon">
+            <span>moorada tells things</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">Hacking NFC cards</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Hacking%20NFC%20cards&amp;url=http://localhost:2368/hacking-nfc-card/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/hacking-nfc-card/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress id="reading-progress" class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../">moorada tells things</a> © 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="../">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=20ec8b1979"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('#reading-progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    
+
+</body>
