@@ -22,7 +22,7 @@
     <meta property="og:url" content="http://localhost:2368/hacking-nfc-card/">
     <meta property="og:image" content="http://localhost:2368/content/images/2020/02/access-card-4575613_1920.jpg">
     <meta property="article:published_time" content="2020-02-29T22:31:01.000Z">
-    <meta property="article:modified_time" content="2020-02-29T23:37:05.000Z">
+    <meta property="article:modified_time" content="2020-02-29T23:47:09.000Z">
     <meta property="article:tag" content="hacking">
     <meta property="article:tag" content="nfc">
     <meta property="article:tag" content="mifare">
@@ -75,7 +75,7 @@
     "headline": "Hacking NFC cards",
     "url": "http://localhost:2368/hacking-nfc-card/",
     "datePublished": "2020-02-29T22:31:01.000Z",
-    "dateModified": "2020-02-29T23:37:05.000Z",
+    "dateModified": "2020-02-29T23:47:09.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "http://localhost:2368/content/images/2020/02/access-card-4575613_1920.jpg",
@@ -212,7 +212,7 @@ To do this you can look for some specific value.  Obviously all bytes are presen
 <p>I saved and wrote the modified dump on the card...</p>
 <pre><code>nfc-mfclassic w a editedDump.mfd editedDump.mfd
 </code></pre>
-<p>I tried the paper in the laundry room, but <em><strong>"din din din din!"</strong></em> and red light was the reply. Apparently, the washing machine detected something weird!</p>
+<p>I tried the card in the laundry room, but <em><strong>"din din din din!"</strong></em> and red light was the reply. Apparently, the washing machine detected something weird!</p>
 <p>Apparently, the washing machine picked up something weird. So I rewrote the card with the dump unmodified and re-tested the card.Everything worked properly!</p>
 <h3 id="reversethechecksum">Reverse the checksum</h3>
 <p>That made me realize there's some kind of cheksum, so I tried to figure out what the other bytes meant. Since I did another transaction with the card and the credit should be changed, I reread the card to see if there was any change. This time I didn't use myLazyCracker, since I know the keys, but simply:</p>
