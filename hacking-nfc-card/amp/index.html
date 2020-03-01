@@ -20,7 +20,7 @@
     <meta property="og:url" content="http://localhost:2368/hacking-nfc-card/">
     <meta property="og:image" content="http://localhost:2368/content/images/2020/02/access-card-4575613_1920.jpg">
     <meta property="article:published_time" content="2020-02-29T22:31:01.000Z">
-    <meta property="article:modified_time" content="2020-02-29T23:47:09.000Z">
+    <meta property="article:modified_time" content="2020-03-01T10:26:49.000Z">
     <meta property="article:tag" content="hacking">
     <meta property="article:tag" content="nfc">
     <meta property="article:tag" content="mifare">
@@ -73,7 +73,7 @@
     "headline": "Hacking NFC cards",
     "url": "http://localhost:2368/hacking-nfc-card/",
     "datePublished": "2020-02-29T22:31:01.000Z",
-    "dateModified": "2020-02-29T23:47:09.000Z",
+    "dateModified": "2020-03-01T10:26:49.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "http://localhost:2368/content/images/2020/02/access-card-4575613_1920.jpg",
@@ -126,16 +126,16 @@
 
                 <div class="kg-card-markdown"><p>It is certainly not the first article on this topic and probably not the last either, but I have noticed that in the various articles there is always something missing or taken for granted.  In this article I would also like to tell about my particular journey.</p>
 <h1 id="goal">Goal</h1>
-<p>The goal is to describe the process of hacking an NFC cards.<br>
+<p>The goal is to describe the process of <strong>hacking NFC cards</strong>.<br>
 These cards are used for access control in various fields (bus, car keys, hotel). In my specific case it is a laundry card for the use of washing machines and dryers on my university campus and my goal is to change the balance on my card.<br>
-First of all, there are more types of cards and the one I will go into today are the most widespread, as well as the cheapest and vulnerable. I'm talking about MIFARE high-frequency NFC cards, in fact they were exploited more than 10 years ago but are still widely used.</p>
+First of all, there are more types of cards and the one I'll be looking at today are the most widespread, as well as the cheapest and vulnerable. I'm talking about <strong>MIFARE high-frequency NFC cards</strong>, in fact they were exploited more than 10 years ago but are still widely used.</p>
 <h1 id="whatyouneed">What you need</h1>
 <ul>
-<li>NFC reader/writer (PN531/532/533). You can easily find it on the internet. I used ACR122U.</li>
+<li>NFC reader/writer (PN531/532/533). You can easily find it on e-commerce on the web. I used ACR122U.</li>
 <li>Kali Linux (it's not necessary but it makes it easier). You can run it "live" from a USB drive (<a href="https://www.kali.org/docs/usb/kali-linux-live-usb-install/">guide</a>). Alternatively you can use some linux distro.</li>
 </ul>
 <h1 id="letsdo">Let's do</h1>
-<p>First let's start Kali Linux and connect to the internet. Open the terminal and execute the following commands.</p>
+<p>First let's start <strong>Kali Linux</strong> and connect to the internet. Open the terminal and execute the following commands.</p>
 <pre><code>sudo su
 apt update
 apt install libnfc-bin
@@ -162,55 +162,53 @@ You have to replace the lines:</p>
 <pre><code>miLazyCracker
 </code></pre>
 <p>Now the program starts "brute-force" (It's not pure brute-force, but exploits a vulnerability) on the keys of the card sectors. Don't worry if it takes a while. It's normal for it to take about 10-60 minutes.</p>
-<p>Finally the program dumps the card to file *.mfd and asks if you want to clone.  If you want to clone to another tag immediately, exchange the tag on the reader with the new tag and submity y, otherwise submit n.</p>
+<p>Finally the program dumps the card to file *.mfd and asks if you want to clone the card.  If you want to clone to another card immediately, exchange the card on the reader with the new card and submity y, otherwise submit n.</p>
 <p>At this point you have your card dump, you can restore your card at this time as many times as you want or clone it to other cards.<br>
 For example, if the card has a balance of $50, you can use up the credit and then restore it to its dump state with the balance of $50.<br>
 If you want to write the dump:</p>
 <pre><code>nfc-mfclassic w a dump.mfd dump.mfd
 </code></pre>
 <h2 id="letsdobetter">Let's do better</h2>
-<p>Honestly, that's not good enough for me. So I tried to read and understand the various sectors of the dump to understand their meaning and try to change the balance.<br>
-A great program to view and edit dumps is 010Editor available <a href="https://www.sweetscape.com/download/010editor/">here<br>
+<p>Honestly, that's not good enough for me. So I tried to read and understand the various sectors of the dump to understand their meaning and with the aim of finding and changing the balance.<br>
+A great program to view and edit dumps is <strong>010Editor</strong> available <a href="https://www.sweetscape.com/download/010editor/">here<br>
 </a>.</p>
 <p>After installing it, you can open the dump.mfd and view its contents. You will see a lot of values in hexadecimal format.  There are 16 sectors and each sector consists of 4 lines. In the first 2 sectors there is usually information about the card or company that produced it, and the last line of each sector corresponds to the reading and writing keys of each sector.</p>
 <h3 id="findthebalance">Find the balance</h3>
-<p>The goal is to make sense of these bytes in order to figure out what to change.<br>
-To do this you can look for some specific value.  Obviously all bytes are presented in hexadecimal so it would make no sense to look for your balance in decimal form. I, for example, knowing my balance, started with this. My balance was $14.00 so I started by converting 1400 into hexadecimal. If you don't know how to convert it or you don't like it you can use a converter (it won't be hard to find it on the web).</p>
+<p>The goal is to make sense of these bytes in order to figure out which bytes to change.<br>
+To do this you can look for a known specific value. Obviously all bytes are presented in hexadecimal so it would make no sense to look for your balance in decimal form. I, for example, knowing my balance, started with this. My balance was $14.00 so I started by converting 1400 into hexadecimal. If you don't know how to convert it or you're lazy (like me) you can use a converter (it won't be hard to find it on the web).</p>
 <p><em>1400 --&gt; <strong>0578</strong></em>.</p>
-<p>Searching the dump values I found the same inverted values in the first two bytes of the second line of the third sector. Intuitively I saw the similarity with the first line and doing the inverse transaction I noticed that it corresponds to the balance before the last transaction (16$)</p>
+<p>Searching the dump values I found the same but inverted position values in the first two bytes of the second line of the third sector. Intuitively I saw the similarity with the first line and doing the inverse operation I noticed that it corresponds to the balance before the last transaction ( 0578 --&gt; 1600 = 16$)</p>
 <pre><code>40 06 00 00 00 00 00 00 00 00 11 02 14 00 47 90
 78 05 00 00 00 00 00 00 00 00 11 02 14 01 32 13
 </code></pre>
 <p>So I tried to change the value to another balance ($60) like this:</p>
-<p><em>6000 --&gt; <strong>003C</strong></em>.</p>
+<p><em>6000 --&gt; <strong>1770</strong></em>.</p>
 <pre><code>40 06 00 00 00 00 00 00 00 00 11 02 14 00 47 90
 70 17 00 00 00 00 00 00 00 01 11 02 14 01 32 13
 </code></pre>
 <p>I saved and wrote the modified dump on the card...</p>
 <pre><code>nfc-mfclassic w a editedDump.mfd editedDump.mfd
 </code></pre>
-<p>I tried the card in the laundry room, but <em><strong>"din din din din!"</strong></em> and red light was the reply. Apparently, the washing machine detected something weird!</p>
-<p>Apparently, the washing machine picked up something weird. So I rewrote the card with the dump unmodified and re-tested the card.Everything worked properly!</p>
+<p>I tried the card in the laundry room, but <em><strong>"din din din din!"</strong></em> and red light was the reply. Apparently, the washing machine detected something weird! So I rewrote the card with the dump unmodified and re-tested the card. Everything worked properly!</p>
 <h3 id="reversethechecksum">Reverse the checksum</h3>
 <p>That made me realize there's some kind of cheksum, so I tried to figure out what the other bytes meant. Since I did another transaction with the card and the credit should be changed, I reread the card to see if there was any change. This time I didn't use myLazyCracker, since I know the keys, but simply:</p>
 <pre><code>nfc-mfclassic r a input.mfd output.mfd
 </code></pre>
-<p>where "input.mfd" corresponds to the previously made dump (containing the read and write keys) , and "output.mfd" corresponds to the name of the new dump</p>
+<p>where "input.mfd" corresponds to the previously made dump (containing the read and write keys) , and "output.mfd" corresponds to name under which the new dump will be saved.</p>
 <p>No sector except the third one has changed! In fact, only the first two lines of the third sector have changed...</p>
 <pre><code>78 05 00 00 00 00 00 00 00 00 11 02 14 01 32 13
 B0 04 00 00 00 00 00 00 00 00 38 02 14 01 7D 4A
 </code></pre>
-<p>And it is immediately noticeable that the second line has become the first line and the bytes in position 11-13, which before were equal between the two lines, have now changed.</p>
-<p>After having translated them into decimal it was easy to understand that these values corresponded to the date when the transaction was done. The value at position 14 could be a daily operations counter. But the last two bytes are completely anonymous. Those two bytes are probably checksums of some kind.</p>
-<p>So I try to see if they are the result of some operation (XOR,OR,AND,+,-,*,/) on the other bytes, but I don't find any matching value (I still suggest you try your dump). I don't get down, I look for some checksum note functions on the web, until I try the cyclic redundancy check (CRC).</p>
-<p>There are many types of algorithms for CRC, so I look for a computer online, and I find <a href="https://crccalc.com/">this great site</a> that allows you to calculate the most famous CRC algorithms.</p>
+<p>And it is immediately noticeable that the second line has become the first line and the bytes in position 11-13, which before were equal between the two lines, have now changed. After having translated them into decimal it was easy to understand that these values corresponded to the date when the transaction was done, the value at position 14 could be a daily operations counter but the last two bytes are completely anonymous. Those two bytes are probably checksums of some kind.</p>
+<p>So I tried to see if they are the result of some operation (XOR,OR,AND,+,-,*,/) on the other bytes, but I don't find any matching value (I still suggest you try it with your dump). I don't get down, I look for some checksum note functions on the web, until I ran into the <strong>cyclic redundancy check (CRC)</strong>.</p>
+<p>There are many types of algorithms for CRC, so I look for a calculator online, and I find <a href="https://crccalc.com/">this great site</a> that allows you to calculate the most famous CRC algorithms.</p>
 <p></p>
-<p>So I entered all the bytes of a line except the last two and clicked on "Calc CRC-16" because in my case the checksum was probably 2 bytes, so 16 bits. You can try different and more appropriate types of CRC. Anyway on the site is shows the list of cheksum and... <em><strong>Kaboom!</strong></em> Here is the correct checksum!</p>
+<p>So I entered all the bytes of a line except the last two and clicked on "Calc CRC-16" because in my case the checksum was probably 2 bytes, so 16 bits. You can try different and more appropriate types of CRC. Anyway on the site is shows the list of cheksum and... <em><strong>Kaboom!</strong></em> Here's the correct checksum!</p>
 <p></p>
 <p>Once I found the right checksum I just had to change the balance, calculate the checksum (in my case CRC-16/MCRF4XX ) and rewrite the whole line like this</p>
 <pre><code>70 17 00 00 00 00 00 00 00 00 38 02 14 01 EB DB
 </code></pre>
-<p>And that’s it!</p>
+<p><strong>And that’s it!</strong></p>
 </div>
 
             </section>
